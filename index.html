@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<title>QuickStudy — free 15-minute help from people in your year</title>
+<style>
+  :root{
+    --ink:#f5f0e6;
+    --ink-2:#aeb4c9;
+    --line:rgba(255,255,255,.12);
+    --bg:#0c0a1d;
+    --card:#16132b;
+    --soft:#1c1838;
+    --brand:#ff6b8b;
+    --brand-ink:#ffb36b;
+    --accent:#4fd1c5;
+    --warm:#ffb84d;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);min-height:100vh;
+    background:radial-gradient(1000px 560px at 8% -12%,rgba(124,58,237,.35),transparent 60%),radial-gradient(900px 520px at 100% 0%,rgba(255,107,139,.28),transparent 60%),var(--bg);
+    font:16px/1.6 "Instrument Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{line-height:1.12;margin:0;letter-spacing:-0.02em;font-family:"Fraunces",Georgia,serif}
+  h1{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:760}
+  h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:720}
+  h3{font-size:1.05rem;font-weight:680}
+  p{margin:0}
+  a{color:var(--brand-ink)}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  section{padding:68px 0;border-top:1px solid var(--line)}
+  .eyebrow{
+    font-size:.74rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--brand);margin-bottom:12px
+  }
+  .lede{color:var(--ink-2);font-size:1.07rem;max-width:62ch}
+
+  /* nav */
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(12,10,29,.72);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)
+  }
+  nav{display:flex;align-items:center;gap:26px;height:62px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:740;letter-spacing:-.02em;margin-right:auto}
+  .logo span{
+    width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    background:linear-gradient(135deg,#ff6b8b,#ffb36b);color:#1a0f1f;font-size:.82rem;font-weight:800
+  }
+  nav a{color:var(--ink-2);text-decoration:none;font-size:.92rem;font-weight:550}
+  nav a:hover{color:var(--ink)}
+  .nav-links{display:flex;gap:24px}
+  @media(max-width:720px){.nav-links{display:none}}
+
+  /* buttons */
+  .btn{
+    display:inline-block;padding:12px 22px;border-radius:999px;border:0;cursor:pointer;
+    font:inherit;font-weight:620;font-size:.95rem;text-decoration:none;transition:.15s
+  }
+  .btn-primary{background:linear-gradient(120deg,#ff6b8b,#ffb36b);color:#1a0f1f;box-shadow:0 10px 30px -10px rgba(255,107,139,.6)}
+  .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-ghost{background:rgba(255,255,255,.06);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+  .btn-ghost:hover{box-shadow:inset 0 0 0 1px #c9d2e2}
+  .btn-sm{padding:8px 15px;font-size:.86rem}
+
+  /* hero */
+  .hero{
+    padding:76px 0 70px;border-top:0;
+    background:
+      radial-gradient(900px 420px at 88% -12%, #e6ecff 0%, rgba(230,236,255,0) 62%),
+      radial-gradient(700px 380px at 4% 6%, #e4f7f3 0%, rgba(228,247,243,0) 58%)
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:6px 14px 6px 8px;font-size:.84rem;color:var(--ink-2);margin-bottom:22px
+  }
+  .pill b{
+    background:var(--accent);color:#fff;border-radius:999px;padding:2px 9px;font-size:.73rem;
+    letter-spacing:.04em;text-transform:uppercase
+  }
+  .hero h1{max-width:19ch}
+  .hero .lede{margin-top:18px;font-size:1.14rem}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .stats{display:flex;flex-wrap:wrap;gap:40px;margin-top:46px}
+  .stat b{display:block;font-size:1.75rem;font-weight:740;letter-spacing:-.03em}
+  .stat small{color:var(--ink-2);font-size:.86rem}
+
+  /* grids */
+  .grid{display:grid;gap:16px;margin-top:34px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.g3,.g2{grid-template-columns:1fr}}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px
+  }
+  .card p{color:var(--ink-2);font-size:.94rem;margin-top:7px}
+  .num{
+    width:28px;height:28px;border-radius:9px;background:var(--soft);color:var(--brand-ink);
+    display:grid;place-items:center;font-weight:750;font-size:.86rem;margin-bottom:14px
+  }
+
+  /* schedule */
+  .slots{display:grid;gap:10px;margin-top:30px}
+  .slot{
+    display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:16px;
+    background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px 18px
+  }
+  .slot .who{font-weight:650}
+  .slot .meta{color:var(--ink-2);font-size:.88rem;margin-top:2px}
+  .slot .when{color:var(--ink-2);font-size:.9rem;white-space:nowrap}
+  .tag{
+    display:inline-block;font-size:.72rem;font-weight:680;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--ink-2);margin-right:6px
+  }
+  .tag.full{background:#fdeeee;color:#b4332f}
+  @media(max-width:700px){
+    .slot{grid-template-columns:1fr;gap:10px}
+    .slot .when{white-space:normal}
+  }
+
+  /* flashcards */
+  #flashcards{background:var(--soft)}
+  .deckbar{display:flex;flex-wrap:wrap;gap:9px;margin-top:28px}
+  .deckbar button{
+    border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 17px;
+    font:inherit;font-size:.9rem;font-weight:580;cursor:pointer;color:var(--ink-2)
+  }
+  .deckbar button[aria-pressed="true"]{background:linear-gradient(120deg,#ff6b8b,#ffb36b);color:#1a0f1f;border-color:transparent}
+  .board{margin-top:22px}
+  .flip{
+    perspective:1400px;width:100%;max-width:580px;height:250px;cursor:pointer;
+    border:0;background:none;padding:0;display:block
+  }
+  .flip-inner{
+    position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.1,.2,1);
+    transform-style:preserve-3d
+  }
+  .flip.is-flipped .flip-inner{transform:rotateY(180deg)}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:18px;padding:30px;display:flex;flex-direction:column;justify-content:center;
+    text-align:left;border:1px solid var(--line);background:var(--card);
+    box-shadow:0 10px 30px -18px rgba(19,24,33,.3)
+  }
+  .face .lbl{
+    font-size:.7rem;font-weight:720;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--brand);margin-bottom:14px
+  }
+  .face .txt{font-size:1.3rem;font-weight:620;line-height:1.35;letter-spacing:-.01em}
+  .face.back{transform:rotateY(180deg);background:linear-gradient(135deg,#7c3aed,#ff6b8b);border-color:transparent;color:#fff}
+  .face.back .lbl{color:#8fa8f5}
+  .face .hint{margin-top:auto;padding-top:18px;font-size:.82rem;color:var(--ink-2)}
+  .face.back .hint{color:#9aa4b4}
+  .deck-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:20px}
+  .counter{color:var(--ink-2);font-size:.9rem;margin-left:4px}
+  .score{
+    margin-top:18px;font-size:.9rem;color:var(--ink-2);background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:11px 15px;display:inline-block
+  }
+
+  /* rewards */
+  .rewards{
+    margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px
+  }
+  .rw-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px}
+  .rw-level{font-size:1.15rem;font-weight:720;letter-spacing:-.02em}
+  .rw-xp{color:var(--ink-2);font-size:.9rem;margin-left:auto}
+  .bar{
+    height:9px;border-radius:999px;background:var(--soft);overflow:hidden;margin-top:14px;
+    box-shadow:inset 0 0 0 1px var(--line)
+  }
+  .bar i{
+    display:block;height:100%;width:0%;border-radius:999px;
+    background:linear-gradient(90deg,var(--brand),var(--accent));
+    transition:width .45s cubic-bezier(.3,.9,.3,1)
+  }
+  .rw-streak{
+    display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-size:.9rem;
+    color:var(--ink-2);background:var(--soft);border-radius:999px;padding:6px 14px
+  }
+  .rw-streak b{color:var(--ink);font-weight:680}
+  .rw-streak.hot{background:rgba(255,184,77,.18);color:#ffd08a}
+  .rw-streak.hot b{color:#8a5a06}
+  .badges{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;margin-top:20px
+  }
+  .badge{
+    border:1px solid var(--line);border-radius:12px;padding:13px;text-align:center;
+    background:var(--soft);opacity:.5;transition:.3s
+  }
+  .badge .ico{font-size:1.4rem;line-height:1;filter:grayscale(1)}
+  .badge .nm{font-size:.8rem;font-weight:650;margin-top:7px}
+  .badge .ds{font-size:.72rem;color:var(--ink-2);margin-top:3px;line-height:1.4}
+  .badge.on{
+    opacity:1;background:var(--card);border-color:rgba(255,107,139,.5);
+    box-shadow:0 6px 18px -12px rgba(47,91,234,.6)
+  }
+  .badge.on .ico{filter:none}
+  .rw-reset{
+    margin-top:18px;background:none;border:0;padding:0;font:inherit;font-size:.82rem;
+    color:var(--ink-2);text-decoration:underline;cursor:pointer
+  }
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,140%);z-index:99;
+    background:linear-gradient(120deg,#ff6b8b,#ffb36b);color:#1a0f1f;padding:13px 22px;border-radius:999px;
+    font-size:.92rem;font-weight:580;box-shadow:0 14px 34px -14px rgba(0,0,0,.6);
+    transition:transform .4s cubic-bezier(.2,.9,.3,1);max-width:90vw;text-align:center
+  }
+  .toast.show{transform:translate(-50%,0)}
+
+  /* booking form */
+  form{margin-top:30px;max-width:620px}
+  .field{margin-bottom:16px}
+  label{display:block;font-size:.88rem;font-weight:620;margin-bottom:6px}
+  input,select,textarea{
+    width:100%;font:inherit;padding:11px 13px;border:1px solid var(--line);border-radius:10px;
+    background:var(--card);color:var(--ink)
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid #c3d0f8;outline-offset:1px;border-color:var(--brand)}
+  textarea{min-height:92px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.row{grid-template-columns:1fr}}
+  .note{font-size:.84rem;color:var(--ink-2);margin-top:14px}
+  .confirm{
+    margin-top:18px;border-radius:12px;padding:16px 18px;background:#eafaf6;
+    border:1px solid #bfe9df;color:#0e6b5b;font-size:.94rem
+  }
+  .confirm[hidden]{display:none}
+
+  /* misc */
+  .bullets{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px}
+  .bullets li{display:flex;gap:11px;align-items:flex-start;color:var(--ink-2);font-size:.96rem}
+  .bullets li::before{
+    content:"";flex:0 0 7px;height:7px;border-radius:50%;background:var(--accent);margin-top:9px
+  }
+  .board-note{
+    margin-top:34px;border-left:3px solid var(--warm);background:rgba(255,184,77,.08);
+    padding:16px 20px;border-radius:0 12px 12px 0;font-size:.93rem;color:#6b4a0c
+  }
+  footer{
+    border-top:1px solid var(--line);padding:38px 0 54px;color:var(--ink-2);font-size:.88rem
+  }
+  footer .logo{margin-bottom:14px;color:var(--ink)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo"><span>Q</span>QuickStudy</div>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#schedule">Who's free</a>
+        <a href="#flashcards">Flashcards</a>
+        <a href="#book">Book a slot</a>
+      </div>
+      <a class="btn btn-primary btn-sm" href="#book">Book a slot</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="pill"><b>Free</b> No money changes hands — ever</div>
+    <h1>Fifteen minutes with someone who already gets it.</h1>
+    <p class="lede">QuickStudy is a student-run help desk. Stuck on one topic? Book a free 15-minute slot at lunch with someone in your year who's strong in that subject. Tutors log volunteer hours instead of charging.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#book">Book a 15-minute slot</a>
+      <a class="btn btn-ghost" href="#flashcards">Try the flashcards</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>15 min</b><small>One topic, one sitting</small></div>
+      <div class="stat"><b>£0</b><small>Free for everyone</small></div>
+      <div class="stat"><b>Lunch &amp; after school</b><small>No extra trips in</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>Six steps, no admin.</h2>
+    <div class="grid g3">
+      <div class="card">
+        <div class="num">1</div>
+        <h3>Say what's stuck</h3>
+        <p>Not "I need maths help" — "I don't get completing the square". One specific thing fits in 15 minutes.</p>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <h3>Pick a free slot</h3>
+        <p>The board below shows who's available and when. Choose whoever covers your subject.</p>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <h3>Meet in the library</h3>
+        <p>Lunch or straight after school. Bring the question, the worksheet, or the past paper.</p>
+      </div>
+      <div class="card">
+        <div class="num">4</div>
+        <h3>Leave with flashcards</h3>
+        <p>Every session ends with 3–5 cards on what you just covered, added to the shared deck below.</p>
+      </div>
+      <div class="card">
+        <div class="num">5</div>
+        <h3>Tutors log hours</h3>
+        <p>Instead of a fee, tutors bank volunteer hours — useful for references, UCAS and awards.</p>
+      </div>
+      <div class="card">
+        <div class="num">6</div>
+        <h3>Nobody's out of pocket</h3>
+        <p>No fees, no subscriptions, no "premium". If it costs money, it isn't QuickStudy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="eyebrow">This week</div>
+    <h2>Who's free, and when.</h2>
+    <p class="lede">Example board — swap these for real tutors once sign-ups are in.</p>
+    <div class="slots">
+      <div class="slot">
+        <div>
+          <div class="who">Amara O. <span class="tag">Year 12</span></div>
+          <div class="meta">Maths · algebra, trigonometry, graphs</div>
+        </div>
+        <div class="when">Mon &amp; Wed lunch · Library desk 3</div>
+        <a class="btn btn-ghost btn-sm" href="#book">Book</a>
+      </div>
+      <div class="slot">
+        <div>
+          <div class="who">Dev P. <span class="tag">Year 11</span></div>
+          <div class="meta">Chemistry · moles, bonding, rates</div>
+        </div>
+        <div class="when">Tue lunch · Lab 2</div>
+        <a class="btn btn-ghost btn-sm" href="#book">Book</a>
+      </div>
+      <div class="slot">
+        <div>
+          <div class="who">Nia B. <span class="tag">Year 12</span></div>
+          <div class="meta">Biology · cells, enzymes, respiration</div>
+        </div>
+        <div class="when">Tue &amp; Fri lunch · Lab 3</div>
+        <a class="btn btn-ghost btn-sm" href="#book">Book</a>
+      </div>
+      <div class="slot">
+        <div>
+          <div class="who">Joss K. <span class="tag">Year 13</span></div>
+          <div class="meta">English lit · essay structure, Macbeth, poetry</div>
+        </div>
+        <div class="when">Thu after school · Room 14</div>
+        <a class="btn btn-ghost btn-sm" href="#book">Book</a>
+      </div>
+      <div class="slot">
+        <div>
+          <div class="who">Mina T. <span class="tag">Year 12</span></div>
+          <div class="meta">Spanish · tenses, speaking practice</div>
+        </div>
+        <div class="when">Wed lunch · Library desk 1</div>
+        <a class="btn btn-ghost btn-sm" href="#book">Book</a>
+      </div>
+      <div class="slot">
+        <div>
+          <div class="who">Rafi S. <span class="tag">Year 13</span> <span class="tag full">Full this week</span></div>
+          <div class="meta">Physics · forces, circuits, SUVAT</div>
+        </div>
+        <div class="when">Fri lunch · Lab 1</div>
+        <a class="btn btn-ghost btn-sm" href="#book">Waitlist</a>
+      </div>
+    </div>
+    <div class="board-note">
+      Subject not listed? Put it in the booking form anyway — unmatched requests go on the "wanted" board, and that's how new tutors get recruited.
+    </div>
+  </div>
+</section>
+
+<section id="flashcards">
+  <div class="wrap">
+    <div class="eyebrow">Shared decks</div>
+    <h2>Flashcards, built by whoever came before you.</h2>
+    <p class="lede">Every session adds cards. Tap a card to flip it, then mark whether you got it — the ones you miss come back around. Right answers earn XP, streaks multiply it, and badges unlock as you go. Your progress saves itself.</p>
+
+    <div class="deckbar" id="deckbar" role="group" aria-label="Choose a deck"></div>
+
+    <div class="board">
+      <button class="flip" id="flip" aria-live="polite">
+        <div class="flip-inner">
+          <div class="face front">
+            <div class="lbl" id="frontLbl">Question</div>
+            <div class="txt" id="frontTxt">Loading…</div>
+            <div class="hint">Tap to see the answer</div>
+          </div>
+          <div class="face back">
+            <div class="lbl">Answer</div>
+            <div class="txt" id="backTxt"></div>
+            <div class="hint">Tap to go back</div>
+          </div>
+        </div>
+      </button>
+
+      <div class="deck-controls">
+        <button class="btn btn-primary btn-sm" id="gotIt">Got it</button>
+        <button class="btn btn-ghost btn-sm" id="missed">Missed it</button>
+        <button class="btn btn-ghost btn-sm" id="shuffle">Shuffle</button>
+        <span class="counter" id="counter"></span>
+      </div>
+      <div class="score" id="score">Nothing marked yet.</div>
+
+      <div class="rewards">
+        <div class="rw-top">
+          <div class="rw-level" id="rwLevel">Level 1 · Newcomer</div>
+          <div class="rw-xp" id="rwXp">0 XP</div>
+        </div>
+        <div class="bar"><i id="rwBar"></i></div>
+        <div class="rw-streak" id="rwStreak">Streak: <b>0</b> in a row</div>
+        <div class="badges" id="badges"></div>
+        <button class="rw-reset" id="rwReset" type="button">Reset my progress</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<section id="more">
+  <div class="wrap">
+    <div class="eyebrow">The rest of it</div>
+    <h2>Other things QuickStudy does.</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>The wanted board</h3>
+        <p>Requests nobody can cover yet, posted publicly. It doubles as the recruitment pitch: "three people need Further Maths, can you help?"</p>
+      </div>
+      <div class="card">
+        <h3>Exam-week pop-ups</h3>
+        <p>In the fortnight before mocks, slots double up and run every lunchtime. Same 15-minute format, more desks.</p>
+      </div>
+      <div class="card">
+        <h3>Hour leaderboard</h3>
+        <p>Volunteer hours, visible. Not a competition exactly, but it's the only reward on offer, so it may as well be on the wall.</p>
+      </div>
+      <div class="card">
+        <h3>Deck of the week</h3>
+        <p>Whichever deck got the most new cards gets printed and pinned up outside the library. Low-tech revision for people who don't open the site.</p>
+      </div>
+    </div>
+    <ul class="bullets">
+      <li>Run it through a teacher or head of year first — you'll need a room booking and sign-off on peer tutoring.</li>
+      <li>Keep sessions in public, supervised spaces. Library or a classroom with staff nearby, never empty rooms.</li>
+      <li>Two tutors minimum per subject so one person's absence doesn't kill the slot.</li>
+      <li>Tutors aren't teachers. The rule is "explain what you understand", not "mark work or hand over answers".</li>
+    </ul>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="eyebrow">Book</div>
+    <h2>Grab a slot.</h2>
+    <p class="lede">Takes about thirty seconds. You'll get a confirmation at the bottom of the form.</p>
+
+    <form id="bookingForm" novalidate>
+      <div class="row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input id="name" name="name" required autocomplete="name" placeholder="Titus">
+        </div>
+        <div class="field">
+          <label for="year">Year group</label>
+          <select id="year" name="year" required>
+            <option value="">Choose…</option>
+            <option>Year 7</option><option>Year 8</option><option>Year 9</option>
+            <option>Year 10</option><option>Year 11</option>
+            <option>Year 12</option><option>Year 13</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="subject">Subject</label>
+          <select id="subject" name="subject" required>
+            <option value="">Choose…</option>
+            <option>Maths</option><option>Chemistry</option><option>Physics</option>
+            <option>Biology</option><option>English lit</option><option>Spanish</option>
+            <option>History</option><option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="slot">Preferred slot</label>
+          <select id="slot" name="slot" required>
+            <option value="">Choose…</option>
+            <option>Mon lunch</option><option>Tue lunch</option><option>Wed lunch</option>
+            <option>Thu lunch</option><option>Fri lunch</option>
+            <option>Thu after school</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="topic">What exactly are you stuck on?</label>
+        <textarea id="topic" name="topic" required placeholder="e.g. I can factorise but I don't get completing the square — Q7 on the sheet."></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Request this slot</button>
+      <p class="note">Free, and nothing is sent anywhere yet — this is a demo form. Wire it to a Google Form or a shared inbox before you launch.</p>
+      <div class="confirm" id="confirm" hidden></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo"><span>Q</span>QuickStudy</div>
+    <p>Student-run, free, fifteen minutes at a time. Get a teacher's sign-off before you start.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- flashcards ---------- */
+  var DECKS = {
+    "Maths": [
+      ["Complete the square: x² + 6x + 1", "(x + 3)² − 8 — halve the 6, square it, subtract it back"],
+      ["Derivative of sin(x)", "cos(x)"],
+      ["The quadratic formula", "x = (−b ± √(b² − 4ac)) / 2a"],
+      ["What does a discriminant of 0 mean?", "One repeated root — the curve just touches the x-axis"],
+      ["Area of a circle", "πr²  (circumference is 2πr — don't swap them)"]
+    ],
+    "Chemistry": [
+      ["moles = ?", "mass ÷ molar mass"],
+      ["What is an ionic bond?", "Electrons transferred from metal to non-metal, then opposite charges attract"],
+      ["Why does rate increase with temperature?", "Particles move faster, so more collisions and more of them exceed the activation energy"],
+      ["What does a catalyst do?", "Lowers the activation energy. It isn't used up and doesn't change the yield"]
+    ],
+    "Biology": [
+      ["Where does photosynthesis happen?", "In the chloroplasts — specifically the chlorophyll inside them"],
+      ["Word equation for respiration", "glucose + oxygen → carbon dioxide + water (+ energy)"],
+      ["What does the mitochondrion do?", "Releases energy by aerobic respiration — the cell's power station"],
+      ["Mitosis vs meiosis", "Mitosis: 2 identical cells, for growth and repair. Meiosis: 4 non-identical gametes, halves the chromosomes"],
+      ["What is osmosis?", "Water moving across a partially permeable membrane, from high water potential to low"],
+      ["Why are enzymes denatured by heat?", "The active site changes shape, so the substrate no longer fits"]
+    ],
+    "Physics": [
+      ["The SUVAT equation without time", "v² = u² + 2as"],
+      ["Newton's second law", "F = ma — force in newtons, mass in kg, acceleration in m/s²"],
+      ["Current in a series circuit", "The same everywhere. It's the voltage that splits"],
+      ["Define power", "Energy transferred per second. P = E / t, measured in watts"]
+    ],
+    "English lit": [
+      ["Four parts of a solid essay paragraph", "Point, evidence, analysis of the method, link back to the question"],
+      ["What is iambic pentameter?", "Five unstressed-stressed pairs per line — the heartbeat rhythm of Shakespeare"],
+      ["Macbeth's core flaw", "Ambition untethered from conscience — he knows it's wrong and does it anyway"],
+      ["Dramatic irony", "The audience knows something a character doesn't"]
+    ],
+    "Spanish": [
+      ["\"I went\" (preterite, yo)", "fui — from ir, irregular"],
+      ["When do you use the imperfect?", "Repeated or ongoing past actions: \"I used to\", \"I was ...ing\""],
+      ["ser vs estar", "ser = permanent traits; estar = states, moods and locations"],
+      ["Say \"there is / there are\"", "hay — one word for both"]
+    ]
+  };
+
+  var deckbar = document.getElementById("deckbar");
+  var flip = document.getElementById("flip");
+  var frontTxt = document.getElementById("frontTxt");
+  var frontLbl = document.getElementById("frontLbl");
+  var backTxt = document.getElementById("backTxt");
+  var counter = document.getElementById("counter");
+  var scoreEl = document.getElementById("score");
+
+  var deckName = "Maths";
+  var order = [];
+  var idx = 0;
+  var right = 0, wrong = 0;
+
+  function buildDeckbar(){
+    Object.keys(DECKS).forEach(function(name){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = name + " · " + DECKS[name].length;
+      b.setAttribute("aria-pressed", String(name === deckName));
+      b.addEventListener("click", function(){ loadDeck(name); });
+      deckbar.appendChild(b);
+    });
+  }
+
+  function syncDeckbar(){
+    var btns = deckbar.querySelectorAll("button");
+    Object.keys(DECKS).forEach(function(name, i){
+      btns[i].setAttribute("aria-pressed", String(name === deckName));
+    });
+  }
+
+  function loadDeck(name){
+    deckName = name;
+    order = DECKS[name].map(function(_, i){ return i; });
+    idx = 0; right = 0; wrong = 0;
+    if (P.decks.indexOf(name) === -1) {
+      P.decks.push(name);
+      checkBadges();
+      save();
+    }
+    syncDeckbar();
+    renderScore();
+    renderRewards();
+    show();
+  }
+
+  function show(){
+    flip.classList.remove("is-flipped");
+    var card = DECKS[deckName][order[idx]];
+    frontLbl.textContent = deckName;
+    frontTxt.textContent = card[0];
+    backTxt.textContent = card[1];
+    counter.textContent = "Card " + (idx + 1) + " of " + order.length;
+  }
+
+  function next(){
+    idx = (idx + 1) % order.length;
+    show();
+  }
+
+  function renderScore(){
+    if (!right && !wrong) {
+      scoreEl.textContent = "Nothing marked yet.";
+      return;
+    }
+    var total = right + wrong;
+    scoreEl.textContent = right + " of " + total + " right in " + deckName +
+      (wrong ? " — missed cards are queued to come back." : " — clean run so far.");
+  }
+
+  /* ---------- rewards ---------- */
+  var STORE = "quickstudy.progress.v1";
+  var LEVELS = [
+    [0, "Newcomer"], [60, "Regular"], [150, "Sharp"],
+    [300, "Strong"], [500, "Standout"], [800, "Legend"]
+  ];
+  var BADGES = [
+    ["first",   "🎯", "First card",    "Mark one card",            function(s){ return s.marked >= 1; }],
+    ["streak5", "🔥", "On a roll",     "5 right in a row",         function(s){ return s.bestStreak >= 5; }],
+    ["streak10","⚡",       "Unstoppable",   "10 right in a row",        function(s){ return s.bestStreak >= 10; }],
+    ["lap",     "📚", "Full lap",      "Every card in one deck",   function(s){ return s.laps >= 1; }],
+    ["honest",  "🪞", "Honest",        "Own up to 5 misses",       function(s){ return s.misses >= 5; }],
+    ["explorer","🧭", "Explorer",      "Open all 6 decks",         function(s){ return s.decks.length >= 6; }],
+    ["xp250",   "🏅", "250 club",      "Reach 250 XP",             function(s){ return s.xp >= 250; }],
+    ["xp600",   "👑", "Top of the board","Reach 600 XP",           function(s){ return s.xp >= 600; }]
+  ];
+
+  var blank = { xp:0, streak:0, bestStreak:0, marked:0, misses:0, laps:0, decks:[], badges:[] };
+  var P = load();
+  var lapTracker = {};
+
+  function load(){
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return Object.assign({}, blank);
+      var p = JSON.parse(raw);
+      return Object.assign({}, blank, p, {
+        decks: Array.isArray(p.decks) ? p.decks : [],
+        badges: Array.isArray(p.badges) ? p.badges : []
+      });
+    } catch(e){ return Object.assign({}, blank); }
+  }
+
+  function save(){
+    try { localStorage.setItem(STORE, JSON.stringify(P)); } catch(e){}
+  }
+
+  function levelFor(xp){
+    var i = 0;
+    for (var k = 0; k < LEVELS.length; k++) if (xp >= LEVELS[k][0]) i = k;
+    return i;
+  }
+
+  var toast = document.getElementById("toast");
+  var toastQueue = [];
+  var toasting = false;
+
+  function say(msg){
+    toastQueue.push(msg);
+    if (!toasting) drainToast();
+  }
+
+  function drainToast(){
+    if (!toastQueue.length) { toasting = false; return; }
+    toasting = true;
+    toast.textContent = toastQueue.shift();
+    toast.classList.add("show");
+    setTimeout(function(){
+      toast.classList.remove("show");
+      setTimeout(drainToast, 320);
+    }, 2000);
+  }
+
+  function award(xp){
+    var before = levelFor(P.xp);
+    P.xp += xp;
+    var after = levelFor(P.xp);
+    if (after > before) say("Level " + (after + 1) + " — " + LEVELS[after][1] + "!");
+    checkBadges();
+    save();
+    renderRewards();
+  }
+
+  function checkBadges(){
+    BADGES.forEach(function(b){
+      if (P.badges.indexOf(b[0]) === -1 && b[4](P)) {
+        P.badges.push(b[0]);
+        say(b[1] + "  Badge unlocked: " + b[2]);
+      }
+    });
+  }
+
+  var badgesEl = document.getElementById("badges");
+  BADGES.forEach(function(b){
+    var d = document.createElement("div");
+    d.className = "badge";
+    d.dataset.id = b[0];
+    d.innerHTML = '<div class="ico"></div><div class="nm"></div><div class="ds"></div>';
+    d.querySelector(".ico").textContent = b[1];
+    d.querySelector(".nm").textContent = b[2];
+    d.querySelector(".ds").textContent = b[3];
+    badgesEl.appendChild(d);
+  });
+
+  var rwLevel = document.getElementById("rwLevel");
+  var rwXp = document.getElementById("rwXp");
+  var rwBar = document.getElementById("rwBar");
+  var rwStreak = document.getElementById("rwStreak");
+
+  function renderRewards(){
+    var li = levelFor(P.xp);
+    var floor = LEVELS[li][0];
+    var ceil = li + 1 < LEVELS.length ? LEVELS[li + 1][0] : null;
+    rwLevel.textContent = "Level " + (li + 1) + " · " + LEVELS[li][1];
+    rwXp.textContent = ceil
+      ? P.xp + " XP · " + (ceil - P.xp) + " to " + LEVELS[li + 1][1]
+      : P.xp + " XP · maxed out";
+    rwBar.style.width = (ceil ? Math.round((P.xp - floor) / (ceil - floor) * 100) : 100) + "%";
+    rwStreak.innerHTML = "Streak: <b>" + P.streak + "</b> in a row · best " + P.bestStreak;
+    rwStreak.classList.toggle("hot", P.streak >= 5);
+    badgesEl.querySelectorAll(".badge").forEach(function(d){
+      d.classList.toggle("on", P.badges.indexOf(d.dataset.id) !== -1);
+    });
+  }
+
+  flip.addEventListener("click", function(){
+    flip.classList.toggle("is-flipped");
+  });
+
+  document.getElementById("gotIt").addEventListener("click", function(){
+    right++;
+    P.marked++;
+    P.streak++;
+    if (P.streak > P.bestStreak) P.bestStreak = P.streak;
+
+    var key = deckName + ":" + order[idx];
+    if (!lapTracker[deckName]) lapTracker[deckName] = {};
+    lapTracker[deckName][key] = true;
+    if (Object.keys(lapTracker[deckName]).length === DECKS[deckName].length) {
+      lapTracker[deckName] = {};
+      P.laps++;
+      say("Full lap of " + deckName + " — +40 XP");
+      award(40);
+    }
+
+    award(10 + Math.min(P.streak, 5));
+    renderScore();
+    next();
+  });
+
+  document.getElementById("missed").addEventListener("click", function(){
+    wrong++;
+    P.marked++;
+    P.misses++;
+    P.streak = 0;
+    award(2);
+    // requeue this card three places further on
+    var card = order.splice(idx, 1)[0];
+    order.splice(Math.min(idx + 3, order.length), 0, card);
+    renderScore();
+    if (idx >= order.length) idx = 0;
+    show();
+  });
+
+  document.getElementById("rwReset").addEventListener("click", function(){
+    P = Object.assign({}, blank);
+    lapTracker = {};
+    save();
+    renderRewards();
+    say("Progress cleared.");
+  });
+
+  document.getElementById("shuffle").addEventListener("click", function(){
+    for (var i = order.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = order[i]; order[i] = order[j]; order[j] = t;
+    }
+    idx = 0;
+    show();
+  });
+
+  buildDeckbar();
+  loadDeck(deckName);
+
+  /* ---------- booking form ---------- */
+  var form = document.getElementById("bookingForm");
+  var confirmEl = document.getElementById("confirm");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var data = new FormData(form);
+    var name = (data.get("name") || "").toString().trim();
+    var subject = (data.get("subject") || "").toString();
+    var slot = (data.get("slot") || "").toString();
+    var topic = (data.get("topic") || "").toString().trim();
+
+    if (!name || !subject || !slot || !topic || !data.get("year")) {
+      confirmEl.hidden = false;
+      confirmEl.style.background = "#fdeeee";
+      confirmEl.style.borderColor = "#f0c4c2";
+      confirmEl.style.color = "#b4332f";
+      confirmEl.textContent = "Fill in every field — especially what you're stuck on, that's the useful bit.";
+      return;
+    }
+
+    confirmEl.hidden = false;
+    confirmEl.style.background = "";
+    confirmEl.style.borderColor = "";
+    confirmEl.style.color = "";
+    confirmEl.textContent = "Thanks " + name + " — " + subject + ", " + slot.toLowerCase() +
+      ", 15 minutes. A tutor will confirm the desk number. Still free.";
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
